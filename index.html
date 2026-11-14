@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent Acquisition Portal</title>
+<style>
+html,body{height:100%;margin:0;padding:0;overflow:hidden}
+body{background:#fff;font-family:Arial,Helvetica,sans-serif}
+#scroller{height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.wrap{position:relative;background:#fff;color:#1a1a1a;font-size:13px;min-height:100%}
+.top{background:#0B1F4B;padding:8px 18px;display:flex;align-items:center;gap:24px;color:#fff;flex-wrap:wrap}
+.logo{background:#fff;border-radius:8px;padding:3px 8px;display:flex;align-items:center}
+.logo img{height:40px;display:block}
+.nav{display:flex;gap:18px;font-size:14px}
+.nav span{cursor:pointer;padding-bottom:4px;border-bottom:2px solid transparent}
+.nav span.on{border-bottom-color:#FFD200}
+.main{padding:1.25rem}
+.h1{font-size:18px;font-weight:500;margin-bottom:4px}
+.h2{font-size:15px;font-weight:500;margin:14px 0 8px}
+.muted{font-size:12px;color:#6B6A65}
+.lab{font-size:12px;color:#5F5E5A;display:block;margin-bottom:4px}
+.inp{width:100%;padding:6px 8px;border:0.5px solid #888780;border-radius:8px;font-size:13px;box-sizing:border-box;background:#fff;color:#1a1a1a;font-family:inherit}
+.btn{border:1px solid #888780;background:#fff;color:#1a1a1a;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:13px}
+.btnp{background:#0A97A6;color:#fff;border:1px solid #0A97A6}
+.btnx{background:#E8F6F8;color:#0B1F4B;border:1px solid #0A97A6;border-radius:8px;padding:6px 12px;cursor:pointer;font-size:13px;font-weight:500}
+.btnd{background:#FCEBEB;color:#791F1F;border:1px solid #A32D2D}
+.card{border:0.5px solid #D3D1C7;border-radius:12px;padding:12px 14px;margin-bottom:10px;background:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.kgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.kpi{border:0.5px solid #D3D1C7;border-radius:12px;padding:10px 12px}
+.kv{font-size:20px;font-weight:500}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pill{font-size:12px;padding:3px 10px;border-radius:12px;display:inline-block;white-space:nowrap}
+.msg{border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:13px}
+.ok{background:#E1F5EE;color:#085041}
+.err{background:#FAECE7;color:#712B13}
+.warn{background:#FFF4CC;color:#5C4300;border:1px solid #FFD200}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px;margin-bottom:14px}
+.bar{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.bar .n{width:120px;color:#5F5E5A}
+.bar .t{flex:1;background:#F1EFE8;border-radius:4px;height:14px;overflow:hidden}
+.bar .f{height:14px;border-radius:4px}
+.bar .v{width:70px;text-align:right;font-weight:500}
+.scroll{overflow-x:auto}
+.tbl-h,.tbl-r{display:grid;grid-template-columns:1fr 1.8fr .9fr .9fr .9fr .9fr .8fr 2.2fr;gap:8px;align-items:center;min-width:860px}
+.tbl-h{font-size:12px;color:#5F5E5A;padding-bottom:6px;border-bottom:0.5px solid #D3D1C7}
+.tbl-r{font-size:13px;padding:8px 0;border-bottom:0.5px solid #D3D1C7;cursor:pointer}
+.tbl-r:hover,.g5r:hover,.clk:hover{background:#F7FCFD}
+.g5h,.g5r{display:grid;grid-template-columns:1.5fr 1.3fr .8fr 1.7fr .9fr .9fr 1fr;gap:10px;align-items:center;min-width:860px}
+.g5h{font-size:12px;color:#5F5E5A;padding:0 6px 6px;border-bottom:0.5px solid #D3D1C7}
+.g5r{padding:10px 6px;border-bottom:0.5px solid #D3D1C7;font-size:13px;cursor:pointer}
+.h3r{display:grid;grid-template-columns:110px 130px 1fr;gap:12px;padding:6px 0;border-bottom:0.5px solid #D3D1C7}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px}
+.tile{border:0.5px solid #888780;border-radius:8px;padding:8px 10px;cursor:pointer;background:#fff}
+.tile.on{border:1.5px solid #0A97A6;background:#E8F6F8}
+.tn{font-size:18px;font-weight:500}
+.split{display:flex;background:#0A97A6;border-radius:12px;overflow:hidden;color:#fff;min-height:440px}
+.rail{width:190px;padding:1.1rem .9rem;flex-shrink:0}
+.rs{display:flex;gap:8px;align-items:center;padding:6px 8px;border-radius:8px;font-size:12px;color:#fff;margin-bottom:4px}
+.rs.on{background:#FFD200;color:#1a1a1a;font-weight:500}
+.rs .d{width:20px;height:20px;border-radius:50%;border:1px solid #fff;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.rs.on .d{background:#1a1a1a;color:#FFD200;border:none}
+.rs.done .d{background:#fff;color:#0A97A6;border:none}
+.content{flex:1;background:#fff;color:#1a1a1a;padding:1.25rem;display:flex;flex-direction:column;min-width:0}
+.navbtns{display:flex;justify-content:space-between;gap:10px;border-top:0.5px solid #D3D1C7;padding-top:12px;margin-top:auto}
+.box{flex:1;min-width:96px;border:1px solid #D3D1C7;border-radius:10px;padding:8px 6px;text-align:center;background:#fff;cursor:pointer}
+.box:hover{border-color:#0A97A6;background:#F7FCFD}
+.box.on{border-color:#0A97A6}
+.bn{font-size:18px;font-weight:500}
+.arr{align-self:center;color:#888780;font-size:16px;padding:0 2px}
+.modal{position:fixed;inset:0;background:rgba(11,31,75,.45);display:flex;align-items:center;justify-content:center;z-index:5;padding:16px}
+.mbox{background:#fff;border-radius:12px;padding:1.25rem;width:420px;max-width:100%;max-height:90vh;overflow-y:auto;box-sizing:border-box}
+.ttl{font-size:16px;font-weight:500;margin-bottom:6px}
+.link{color:#0A97A6;text-decoration:underline;cursor:pointer}
+.sec{font-size:13px;font-weight:500;margin-bottom:6px}
+.wrap.busy{pointer-events:none}
+.wrap.busy .main{opacity:.55}
+#chip{display:none;position:fixed;top:10px;right:14px;z-index:9;background:#FFD200;color:#1a1a1a;border-radius:12px;padding:5px 12px;font-size:12px;font-weight:500;font-family:Arial,Helvetica,sans-serif}
+#chip.on{display:block}
+@media(max-width:640px){.split{flex-direction:column}.rail{width:auto}}
+</style>
+</head>
+<body>
+<div id="scroller">
+<div class="wrap" id="wrap">
+  <div class="top">
+    <div class="logo"><img src="logo.png" alt="Shell Recharge"></div>
+    <div class="nav" id="nav"></div>
+  </div>
+  <div class="main" id="main"><div class="muted" style="padding:30px 0">Loading the portal...</div></div>
+</div>
+</div>
+<div id="chip">Working...</div>
+<script>
+let TODAY="";
+function setToday(){const n=new Date();TODAY=n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0");}
+setToday();
+const IVMAP={"L1 interview":"L1","L2 interview":"L2","L3 interview":"L3","L4 interview":"L4","L5 interview":"L5","Behavioural interview":"BI","Get to know you interview":"GTKY","Capstone interview":"Capstone","Others":"Others"};
+const TYPEOF={};Object.keys(IVMAP).forEach(k=>TYPEOF[IVMAP[k]]=k);
+const IVOPTS=["Select interview","L1 interview","L2 interview","L3 interview","L4 interview","L5 interview","Behavioural interview","Get to know you interview","Capstone interview","Others"];
+const INTERVIEW_TILE=["L1","L2","L3","L4","L5","BI","GTKY","Capstone","Others"];
+const FLOW=[["Added",null],["L1","L1"],["L2","L2"],["L3","L3"],["BI","BI"],["Offer rolled out","Offer"],["Offer accepted","Hire"]];
+const LABELS=["New Application","Screening","L1","L2","L3","BI","Offer","Hire","Joined","BGV","Declined"];
+const ALLST=["New Application","Screening","L1","L2","L3","L4","L5","BI","GTKY","Capstone","Others","Offer","Hire","Joined","BGV","Declined"];
+const IVS=["#EEEDFE","#3C3489"];
+const STYLE={"New Application":["#E6F1FB","#0C447C"],"Screening":["#FAEEDA","#633806"],"L1":IVS,"L2":IVS,"L3":IVS,"L4":IVS,"L5":IVS,"BI":IVS,"GTKY":IVS,"Capstone":IVS,"Others":IVS,"Offer":["#E1F5EE","#085041"],"Hire":["#EAF3DE","#27500A"],"Joined":["#D9F2F5","#075E68"],"BGV":["#E3E8F5","#0B1F4B"],"Declined":["#FAECE7","#712B13"],"Open":["#E1F5EE","#085041"],"On hold":["#FFF4CC","#5C4300"],"Closed":["#ECEAE3","#444441"]};
+const BARC={"New Application":"#85B7EB","Screening":"#EF9F27","L1":"#AFA9EC","L2":"#AFA9EC","L3":"#AFA9EC","BI":"#AFA9EC","Offer":"#5DCAA5","Hire":"#97C459","Joined":"#0A97A6","BGV":"#0B1F4B","Declined":"#E24B4A"};
+const DOT={"Open":"#1D9E75","On hold":"#E0A800","Closed":"#888780"};
+const RSTEPS=["Position details","Job details and pay","Opening details","Hiring workflow","Review and create"];
+const CSTEPS=["Candidate details","Source","Job applied for","Review and save"];
+const SRC_FOLLOW={"Vendor":"Vendor name","Self-sourcing":"Source of self-sourcing","Others":"Please specify the source"};
+const SOURCES=["LinkedIn","Naukri","Vendor","Self-sourcing","Referral","Internal application","Others"];
+const CATS=["Full time employee","Contractor","Rehire","Employee of Shell Recharge","Employee of Shell"];
+const EMP_CATS=["Employee of Shell Recharge","Employee of Shell"];
+const EMP_STATUS=["Currently employed","Past employee"];
+const JOBCATS=["Full time","Contract"];
+const BT={
+  btnx:{"background":"#E8F6F8","color":"#0B1F4B","-webkit-text-fill-color":"#0B1F4B","border":"1px solid #0A97A6"},
+  btnp:{"background":"#0A97A6","color":"#FFFFFF","-webkit-text-fill-color":"#FFFFFF","border":"1px solid #0A97A6"},
+  btnd:{"background":"#FCEBEB","color":"#791F1F","-webkit-text-fill-color":"#791F1F","border":"1px solid #A32D2D"},
+  btn:{"background":"#FFFFFF","color":"#1A1A1A","-webkit-text-fill-color":"#1A1A1A","border":"1px solid #888780"}
+};
+function fixBtns(){
+  document.querySelectorAll("button").forEach(b=>{
+    let k=null;
+    ["btnx","btnp","btnd","btn"].forEach(c=>{if(!k&&b.classList.contains(c))k=c;});
+    if(!k)return;
+    const s=BT[k];
+    Object.keys(s).forEach(p=>b.style.setProperty(p,s[p],"important"));
+    b.style.setProperty("opacity","1","important");
+    b.style.setProperty("font-size","13px","important");
+    b.style.setProperty("padding","6px 12px","important");
+    b.style.setProperty("border-radius","8px","important");
+    b.style.setProperty("cursor","pointer","important");
+  });
+}
+
+function days(a,b){return Math.round((new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/86400000);}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function pct(n,t){return t?Math.round(n/t*100):0;}
+function fullName(c){return [c.first,c.middle,c.last].filter(Boolean).join(" ");}
+function order(r){return ["New Application","Screening"].concat(r.rounds,["Offer","Hire","Joined","BGV"]);}
+function reqById(id){return R.find(r=>r.id===id);}
+function tagLabel(t){return t.declined?"Declined":order(reqById(t.req))[t.idx];}
+function reached(t,label){const i=order(reqById(t.req)).indexOf(label);return i>=0&&t.idx>=i;}
+function tg(req,label,declined,reason,doj){const i=order(reqById(req)).indexOf(label);return {req:req,idx:i<0?0:i,declined:!!declined,reason:reason||"",doj:doj||""};}
+function allTags(){const out=[];C.forEach(c=>c.tags.forEach(t=>out.push({c:c,t:t})));return out;}
+function hires(r){return allTags().filter(x=>x.t.req===r.id&&!x.t.declined&&reached(x.t,"Hire")).length;}
+function pill(s){const st=STYLE[s]||["#F1EFE8","#444441"];return '<span class="pill" style="background:'+st[0]+';color:'+st[1]+'">'+esc(s)+'</span>';}
+function logLine(r,text,d){r.log.push({d:d||TODAY,t:text});}
+function isInternal(c){return EMP_CATS.includes(c.category)&&c.empStatus==="Currently employed";}
+function catText(c){return c.category+(EMP_CATS.includes(c.category)&&c.empStatus?" ("+c.empStatus.toLowerCase()+")":"");}
+function ttf(r){return r.status==="Closed"?days(r.clock,r.closed):null;}
+function lastAct(r){return r.hist[r.hist.length-1];}
+function ageLine(r){
+  if(r.status==="Closed")return "Closed "+r.closed+" | Time to fill "+ttf(r)+" days";
+  if(r.status==="On hold")return "On hold since "+lastAct(r).d+" | Time to fill restarts from zero when reopened";
+  return "Open for "+days(r.clock,TODAY)+" days | "+(r.hist.length>1?"Reopened ":"Opened ")+r.clock;
+}
+
+let R=[],C=[];
+
+let tab="dash",msg=null;
+let dashReq="All",dashMonth="All",anReq="All";
+let regFilter="All",focusReq=null,focusCand=null,candSearch="",candTile="All";
+let reqStep=0,D={},cStep=0,CD={},stOpen=false,ST={},saveOpen=false,pend={},pdoj={},decl=null;
+let reqEdit=false,E={},drill=null,profFrom="cands",candEdit=false,CE={},LIST_BASE=[];
+
+function nextReqId(){let m=0;R.forEach(r=>{const x=/^REQ-(\d+)$/i.exec(r.id);if(x)m=Math.max(m,+x[1]);});return "REQ-"+(m+1);}
+function resetReqDraft(){D={bp:"",req:nextReqId(),title:"",jobCat:"",level:"",positions:"1",location:"",dept:"",hm:"",recruiter:"",recEmail:"",desc:"",pmin:"",pmid:"",pmax:"",reason:"",open:TODAY,ivs:[{type:"",who:""},{type:"",who:""}]};}
+function newCD(){return {category:"",empStatus:"",resume:"",resumeFile:null,first:"",middle:"",last:"",email:"",phone:"",location:"",source:"",srcDetail:"",reqs:[]};}
+resetReqDraft();CD=newCD();
+
+function go(t){tab=t;msg=null;render();}
+function setD(k,v){D[k]=v;}
+function setCD(k,v){CD[k]=v;}
+function setE(k,v){E[k]=v;}
+function setCE(k,v){CE[k]=v;}
+function setCnt(v){let n=Math.max(0,Math.min(10,Math.floor(Number(v)||0)));while(D.ivs.length<n)D.ivs.push({type:"",who:""});D.ivs=D.ivs.slice(0,n);render();}
+function setIv(i,k,v){D.ivs[i][k]=v;if(k==="type")render();}
+function setEcnt(v){let n=Math.max(0,Math.min(10,Math.floor(Number(v)||0)));while(E.ivs.length<n)E.ivs.push({type:"",who:""});E.ivs=E.ivs.slice(0,n);render();}
+function setEiv(i,k,v){E.ivs[i][k]=v;if(k==="type")render();}
+function nav(){
+  const cur=(tab==="rdet"||tab==="rnew")?"reqs":((tab==="cadd"||tab==="cprof")?"cands":(tab==="drill"?(drill&&drill.backTab==="dash"?"dash":"reqs"):tab));
+  return [["dash","Dashboard"],["reqs","Requisitions"],["cands","Candidates"]].map(([k,l])=>'<span class="'+(cur===k?"on":"")+'" onclick="go(\''+k+'\')">'+l+'</span>').join("");
+}
+function fg(items,obj,setter){return '<div class="grid">'+items.map(it=>{const k=it[0],l=it[1],t=it[2]||"text";
+  if(t==="select")return '<div><label class="lab">'+l+'</label><select class="inp" onchange="'+setter+'(\''+k+'\',this.value)"><option value="">Select</option>'+it[3].map(o=>'<option value="'+o+'" '+(obj[k]===o?'selected':'')+'>'+o+'</option>').join('')+'</select></div>';
+  return '<div><label class="lab">'+l+'</label><input class="inp" type="'+t+'" value="'+esc(obj[k]==null?"":obj[k])+'" onchange="'+setter+'(\''+k+'\',this.value)"></div>';}).join("")+'</div>';}
+function catFields(obj,name){
+  return '<div class="grid" style="margin-bottom:12px"><div><label class="lab">Category</label><select class="inp" onchange="'+name+'.category=this.value;'+name+'.empStatus=\'\';render()"><option value="">Select category</option>'+CATS.map(o=>'<option value="'+o+'" '+(obj.category===o?'selected':'')+'>'+o+'</option>').join('')+'</select></div>'+
+  (EMP_CATS.includes(obj.category)?'<div><label class="lab">Employment with '+(obj.category==="Employee of Shell"?"Shell":"Shell Recharge")+'</label><select class="inp" onchange="'+name+'.empStatus=this.value"><option value="">Select</option>'+EMP_STATUS.map(o=>'<option value="'+o+'" '+(obj.empStatus===o?'selected':'')+'>'+o+'</option>').join('')+'</select></div>':'')+'</div>';
+}
+function rv(l,v){return '<div style="display:flex;gap:12px;padding:6px 0;border-bottom:0.5px solid #D3D1C7"><div style="width:170px;color:#5F5E5A;flex-shrink:0">'+l+'</div><div style="flex:1">'+(v?v:'<span class="muted">Not entered</span>')+'</div></div>';}
+function split(steps,cur,title,content,navHtml){
+  const rail=steps.map((s,i)=>'<div class="rs '+(i===cur?"on":(i<cur?"done":""))+'"><div class="d">'+(i<cur?"&#10003;":(i+1))+'</div><div>'+s+'</div></div>').join("");
+  return '<div class="split"><div class="rail"><div style="font-size:12px">Talent Acquisition</div><div style="font-size:16px;font-weight:500;margin:2px 0 14px">'+title+'</div>'+rail+'</div><div class="content">'+content+'<div class="navbtns">'+navHtml+'</div></div></div>';
+}
+function months(){
+  const s={};R.forEach(r=>s[r.open.slice(0,7)]=1);C.forEach(c=>s[c.added.slice(0,7)]=1);
+  return Object.keys(s).sort().map(m=>[m,new Date(m+"-01T00:00:00").toLocaleString("en-GB",{month:"long",year:"numeric"})]);
+}
+function analysisScope(){
+  return anReq==="All"?dashData().tags:allTags().filter(x=>x.t.req===anReq&&(dashMonth==="All"||x.c.added.slice(0,7)===dashMonth));
+}
+function dashData(){
+  const reqs=R.filter(r=>(dashReq==="All"||r.id===dashReq)&&(dashMonth==="All"||r.open.slice(0,7)===dashMonth));
+  const tags=allTags().filter(x=>reqs.some(r=>r.id===x.t.req)&&(dashMonth==="All"||x.c.added.slice(0,7)===dashMonth));
+  return {reqs:reqs,tags:tags};
+}
+function flowHtml(tags){
+  const n=tags.length;
+  return '<div class="row" style="align-items:stretch;gap:4px">'+FLOW.map((f,i)=>{
+    const v=f[1]===null?n:tags.filter(x=>reached(x.t,f[1])).length;
+    return (i?'<div class="arr">&rarr;</div>':'')+'<div class="box'+(i===0?' on':'')+'" onclick="drillFlow('+i+')"><div class="muted">'+f[0]+'</div><div class="bn">'+v+'</div><div class="muted">'+pct(v,n)+'%</div></div>';
+  }).join('')+'</div>';
+}
+function vDash(){
+  const d=dashData();
+  const cntS=s=>d.reqs.filter(r=>r.status===s).length;
+  const closedR=d.reqs.filter(r=>r.status==="Closed");
+  const tt=closedR.map(r=>({id:r.id,d:ttf(r)}));
+  const avg=tt.length?Math.round(tt.reduce((s,x)=>s+x.d,0)/tt.length):null;
+  const pos=d.reqs.reduce((s,r)=>s+r.positions,0);
+  const filled=d.reqs.reduce((s,r)=>s+Math.min(hires(r),r.positions),0);
+  const total=d.tags.length||1;
+  const maxT=Math.max.apply(null,tt.map(x=>x.d).concat([1]));
+  const stageBars=LABELS.map(s=>{const n=d.tags.filter(x=>tagLabel(x.t)===s).length;return '<div class="bar"><div class="n">'+s+'</div><div class="t"><div class="f" style="width:'+pct(n,total)+'%;background:'+(BARC[s]||"#B4B2A9")+'"></div></div><div class="v">'+n+'</div></div>';}).join('');
+  const ttfBars=tt.length?tt.map(x=>'<div class="bar"><div class="n" style="width:80px">'+x.id+'</div><div class="t"><div class="f" style="width:'+Math.round(x.d/maxT*100)+'%;background:#0A97A6"></div></div><div class="v" style="width:80px">'+x.d+(x.d===1?' day':' days')+'</div></div>').join(''):'<div class="muted">No closed requisitions in this view</div>';
+  const rows=d.reqs.map(r=>{
+    const rt=d.tags.filter(x=>x.t.req===r.id);
+    const dd=r.status==="Closed"?ttf(r)+' days':(r.status==="On hold"?'On hold':'Open '+days(r.clock,TODAY)+'d');
+    const counts=ALLST.map(s=>{const n=rt.filter(x=>tagLabel(x.t)===s).length;return n?s+': '+n:null;}).filter(Boolean).join(', ');
+    return '<div class="tbl-r" onclick="openReq(\''+r.id+'\')"><div style="font-weight:500;color:#0A97A6;text-decoration:underline">'+r.id+'</div><div>'+esc(r.title)+'</div><div>'+pill(r.status)+'</div><div>'+r.clock+'</div><div>'+(r.closed||'-')+'</div><div>'+dd+'</div><div>'+rt.length+'</div><div style="color:#5F5E5A">'+(counts||'None')+'</div></div>';
+  }).join('');
+  const scope=analysisScope();
+  const anOpts='<option value="All">Overall (all requisitions in view)</option>'+R.map(r=>'<option value="'+r.id+'" '+(anReq===r.id?'selected':'')+'>'+r.id+' - '+esc(r.title)+' ('+r.status.toLowerCase()+')</option>').join('');
+  const anSub=anReq==="All"?"Overall numbers. Click any level to see the candidates.":(function(){const r=reqById(anReq);return r.id+' - '+esc(r.title)+'. Click any level to see the candidates.';})();
+  return '<div class="row" style="justify-content:space-between;margin-bottom:12px"><div class="row"><div><div class="lab">Requisition</div><select class="inp" style="width:240px" onchange="dashReq=this.value;render()"><option value="All">All requisitions</option>'+R.map(r=>'<option value="'+r.id+'" '+(dashReq===r.id?'selected':'')+'>'+r.id+' - '+esc(r.title)+'</option>').join('')+'</select></div><div><div class="lab">Month</div><select class="inp" style="width:170px" onchange="dashMonth=this.value;render()"><option value="All">All months</option>'+months().map(m=>'<option value="'+m[0]+'" '+(dashMonth===m[0]?'selected':'')+'>'+m[1]+'</option>').join('')+'</select></div></div><button class="btnx" onclick="xl()">Download Excel</button></div>'+
+  '<div class="kgrid"><div class="kpi"><div class="muted">Open requisitions</div><div class="kv">'+cntS("Open")+'</div></div><div class="kpi"><div class="muted">On hold</div><div class="kv">'+cntS("On hold")+'</div></div><div class="kpi"><div class="muted">Closed requisitions</div><div class="kv">'+closedR.length+'</div></div><div class="kpi"><div class="muted">Candidates</div><div class="kv">'+d.tags.length+'</div><div class="muted">tagged in this view</div></div><div class="kpi"><div class="muted">Avg time to fill</div><div class="kv">'+(avg===null?'-':avg+' days')+'</div><div class="muted">closed requisitions only</div></div><div class="kpi"><div class="muted">Positions filled</div><div class="kv">'+filled+' of '+pos+'</div></div></div>'+
+  '<div class="two"><div class="card" style="margin:0"><div class="sec">Candidates by stage</div>'+stageBars+'</div><div class="card" style="margin:0"><div class="sec">Time to fill, closed requisitions</div>'+ttfBars+'<div class="muted" style="margin-top:8px">Counted from the latest open date to the closed date.</div></div></div>'+
+  '<div class="card"><div class="sec">Requisitions (click a requisition to open it)</div><div class="scroll"><div class="tbl-h"><div>Req</div><div>Title</div><div>Status</div><div>Opened</div><div>Closed</div><div>Days</div><div>Candidates</div><div>Stages</div></div>'+(rows||'<div class="muted" style="padding:8px 0">No requisitions in this view</div>')+'</div></div>'+
+  '<div class="card" style="border-color:#0A97A6;background:#F7FCFD"><div class="sec" style="font-size:15px">Requisition analysis</div><div class="row" style="margin:8px 0 12px"><div><div class="lab">Analyse</div><select class="inp" style="width:300px;max-width:100%" onchange="anReq=this.value;render()">'+anOpts+'</select></div><div class="muted">'+anSub+'</div></div>'+flowHtml(scope)+'</div>';
+}
+function drillFlow(i){
+  drill={kind:"flow",i:i,title:(anReq==="All"?"All requisitions":anReq)+" - "+FLOW[i][0],backTab:"dash"};
+  candSearch="";candTile="All";tab="drill";msg=null;render();
+}
+function drillStage(rid,label){
+  drill={kind:"stage",rid:rid,label:label,title:rid+" - "+label,backTab:"rdet"};
+  candSearch="";candTile="All";tab="drill";msg=null;render();
+}
+function drillTags(){
+  if(drill.kind==="stage")return allTags().filter(x=>x.t.req===drill.rid&&tagLabel(x.t)===drill.label);
+  const sc=analysisScope();const step=FLOW[drill.i];
+  return step[1]===null?sc:sc.filter(x=>reached(x.t,step[1]));
+}
+function vReqs(){
+  const list=R.filter(r=>regFilter==="All"||r.status===regFilter);
+  const cards=list.slice().reverse().map(r=>{
+    const tagged=allTags().filter(x=>x.t.req===r.id).length;
+    return '<div class="card clk" onclick="openReq(\''+r.id+'\')"><div class="muted" style="margin-bottom:6px">'+ageLine(r)+'</div><div class="row" style="justify-content:space-between"><div class="row"><span style="width:9px;height:9px;border-radius:50%;background:'+DOT[r.status]+';display:inline-block"></span><span style="font-size:15px;font-weight:500;color:#0A97A6">'+r.id+' - '+esc(r.title)+'</span>'+pill(r.status)+'</div><div class="muted" style="font-size:13px">'+Math.min(hires(r),r.positions)+' of '+r.positions+' positions filled</div></div><div class="grid" style="margin-top:10px;border-top:0.5px solid #D3D1C7;padding-top:10px">'+[["BP",r.bp],["Job category",r.jobCat],["Level",r.level],["Reason",r.reason],["Hiring manager",r.hm],["Recruiter",r.recruiter],["Department",r.dept],["Location",r.location],["Candidates tagged",tagged]].map(p=>'<div><div class="muted">'+p[0]+'</div><div style="font-weight:500">'+esc(p[1])+'</div></div>').join('')+'</div></div>';
+  }).join('');
+  return '<div class="row" style="justify-content:space-between;margin-bottom:12px"><div class="row"><select class="inp" style="width:160px" onchange="regFilter=this.value;render()">'+['All','Open','On hold','Closed'].map(o=>'<option '+(regFilter===o?'selected':'')+'>'+o+'</option>').join('')+'</select><span class="muted">Displaying '+list.length+' of '+R.length+' requisitions</span></div><div class="row"><button class="btnx" onclick="xl()">Download Excel</button><button class="btnp" onclick="startReq()">Create requisition</button></div></div>'+(cards||'<div class="muted">No requisitions in this view</div>');
+}
+function openReq(id){focusReq=id;reqEdit=false;tab="rdet";msg=null;render();}
+function startReq(){resetReqDraft();reqStep=0;tab="rnew";msg=null;render();}
+function startEditReq(){
+  const r=reqById(focusReq);
+  E={title:r.title,jobCat:r.jobCat,level:r.level,positions:String(r.positions),location:r.location,dept:r.dept,hm:r.hm,recruiter:r.recruiter,recEmail:r.recEmail,reason:r.reason,open:r.open,pmin:r.pmin,pmid:r.pmid,pmax:r.pmax,desc:r.desc,ivs:r.ivs.map(i=>({type:i.type,who:i.who}))};
+  reqEdit=true;msg=null;render();
+}
+function cancelEditReq(){reqEdit=false;render();}
+function saveEditReq(){
+  if(!E.title){msg={t:"err",s:"Job designation cannot be empty."};render();return;}
+  if(!E.jobCat){msg={t:"err",s:"Choose the job category."};render();return;}
+  if(E.recEmail&&!/^\S+@\S+\.\S+$/.test(E.recEmail)){msg={t:"err",s:"Enter a valid recruiter email ID."};render();return;}
+  send("edit_req",{id:focusReq,E:E},a=>{msg={t:a.ok?"ok":"err",s:a.msg};if(a.ok)reqEdit=false;render();});
+}
+function ivEditor(list,setIvName){
+  return list.map((iv,i)=>'<div class="card" style="margin:0"><label class="lab">Interview '+(i+1)+'</label><select class="inp" onchange="'+setIvName+'('+i+',\'type\',this.value)">'+IVOPTS.map(o=>'<option value="'+o+'" '+((o===iv.type)||(!iv.type&&o===IVOPTS[0])?'selected':'')+(o===IVOPTS[0]?' disabled':'')+'>'+o+'</option>').join('')+'</select>'+(iv.type&&iv.type!==IVOPTS[0]?'<label class="lab" style="margin-top:8px">Interviewer name</label><input class="inp" value="'+esc(iv.who)+'" onchange="'+setIvName+'('+i+',\'who\',this.value)">':'')+'</div>').join('');
+}
+function vRReqEdit(){
+  const r=reqById(focusReq);
+  const od=[["reason","Reason for opening"]];if(r.hist.length===1)od.push(["open","Open date","date"]);
+  return '<div class="row" style="justify-content:space-between;margin-bottom:10px"><div class="h1" style="margin:0">Edit '+focusReq+'</div><div class="row"><button class="btn" onclick="cancelEditReq()">Cancel</button><button class="btnp" onclick="saveEditReq()">Save changes</button></div></div>'+
+  '<div class="muted" style="margin-bottom:12px">BP number and requisition number cannot be changed. Every saved change is logged in the timeline. Use Change status to hold, reopen, or close.</div>'+
+  '<div class="h2" style="margin-top:0">Position details</div>'+fg([["title","Job designation"],["jobCat","Job category","select",JOBCATS],["level","Job level"],["positions","Number of positions","number"],["location","Location"],["dept","Department"],["hm","Hiring manager name"],["recruiter","Recruiter name"],["recEmail","Recruiter email ID","email"]],E,"setE")+
+  '<div class="h2">Pay range</div>'+fg([["pmin","Minimum pay"],["pmid","Midpoint pay"],["pmax","Maximum pay"]],E,"setE")+
+  '<div class="h2">Opening details</div>'+fg(od,E,"setE")+
+  '<div class="h2">Job description</div><textarea class="inp" rows="6" onchange="setE(\'desc\',this.value)">'+esc(E.desc)+'</textarea>'+
+  '<div class="h2">Hiring workflow</div><label class="lab">Number of interviews</label><input class="inp" style="width:90px" type="number" min="0" max="10" value="'+E.ivs.length+'" onchange="setEcnt(this.value)"><div class="grid" style="margin-top:12px">'+ivEditor(E.ivs,"setEiv")+'</div>';
+}
+function vRDet(){
+  if(reqEdit)return vRReqEdit();
+  const r=reqById(focusReq);
+  if(!r)return '<div class="muted">Select a requisition from the list.</div>';
+  const tags=allTags().filter(x=>x.t.req===r.id);
+  const stages=order(r).concat(["Declined"]);
+  const counts=stages.map(s=>{const n=tags.filter(x=>tagLabel(x.t)===s).length;return '<div class="card clk" style="padding:8px 10px;margin:0" onclick="drillStage(\''+r.id+'\',\''+s+'\')"><div class="muted">'+s+'</div><div class="bn">'+n+'</div><div class="muted" style="color:#0A97A6">View candidates</div></div>';}).join('');
+  const pay=[r.pmin,r.pmid,r.pmax].filter(Boolean).join(' / ');
+  const log=r.log.slice().reverse().map(l=>'<div style="display:flex;gap:12px;padding:6px 0;border-bottom:0.5px solid #D3D1C7"><div style="width:90px;color:#5F5E5A;flex-shrink:0">'+l.d+'</div><div>'+esc(l.t)+'</div></div>').join('');
+  const hist=r.hist.map(h=>'<div class="h3r"><div>'+h.d+'</div><div>'+pill(h.s==="Opened"||h.s==="Reopened"?"Open":h.s).replace(">Open<",">"+h.s+"<")+'</div><div>'+esc(h.reason)+'</div></div>').join('');
+  const joiners=tags.filter(x=>x.t.doj&&!x.t.declined);
+  const jl=joiners.length?joiners.map(x=>'<div class="h3r clk" style="cursor:pointer" onclick="openProf(\''+x.c.id+'\')"><div>'+x.t.doj+'</div><div>'+pill(tagLabel(x.t))+'</div><div style="color:#0A97A6;font-weight:500">'+esc(fullName(x.c))+'</div></div>').join(''):'<div class="muted" style="padding:6px 0">No joining dates recorded yet. A joining date is entered when a candidate is moved to Joined.</div>';
+  return '<div class="row" style="justify-content:space-between;margin-bottom:10px"><span class="link" onclick="go(\'reqs\')">Back to requisitions</span><div class="row"><button class="btnx" onclick="startEditReq()">Edit requisition</button>'+(r.status==="Closed"&&hires(r)>0?'':'<button class="btnp" onclick="openStatus()">'+(r.status==="Closed"?'Reopen requisition':'Change status')+'</button>')+'<button class="btnx" onclick="xl()">Download Excel</button></div></div>'+
+  '<div class="row"><div class="h1" style="margin:0">'+r.id+' - '+esc(r.title)+'</div>'+pill(r.status)+'</div><div class="muted" style="margin:4px 0 12px">'+ageLine(r)+'</div>'+
+  '<div class="h2">Overview</div><div class="card"><div class="grid">'+[["BP number",r.bp],["Requisition number",r.id],["Job designation",r.title],["Job category",r.jobCat],["Job level",r.level],["Positions",r.positions],["Filled",Math.min(hires(r),r.positions)+" of "+r.positions],["Location",r.location],["Department",r.dept],["Hiring manager",r.hm],["Recruiter name",r.recruiter],["Recruiter email ID",r.recEmail],["Reason for opening",r.reason],["Pay range",pay],["First open date",r.open],["Time to fill counted from",r.clock],["Closed date",r.closed||"-"]].map(p=>'<div><div class="muted">'+p[0]+'</div><div style="font-weight:500;overflow-wrap:anywhere">'+esc(p[1])+'</div></div>').join('')+'</div></div>'+
+  '<div class="h2">Requisition status history</div><div class="card" style="padding:6px 14px"><div class="h3r muted"><div>Date</div><div>Activity</div><div>Reason</div></div>'+hist+(r.status==="Closed"?'<div class="muted" style="padding:8px 0">'+(hires(r)>0?'This requisition is closed with a hired or joined candidate, so it cannot be reopened. To hire again for this position, create a new requisition under the same BP number.':'This requisition is closed with no hired or joined candidate, so it can still be reopened. Once a candidate is hired or joined, a new requisition under the same BP number is needed.')+'</div>':'')+'</div>'+
+  '<div class="h2">Interview workflow</div><div class="card">'+(r.ivs.length?r.ivs.map((iv,i)=>(i+1)+'. '+esc(iv.type)+(iv.who?' with '+esc(iv.who):'')).join('<br>'):'<span class="muted">No interviews set</span>')+'</div>'+
+  '<div class="h2">Candidates tagged</div><div class="card row" style="justify-content:space-between"><div><div class="muted">Candidates tagged to this requisition</div><div class="kv">'+tags.length+'</div></div><span class="link" onclick="candTile=\'All\';candSearch=\'\';go(\'cands\')">View in candidates tab</span></div>'+
+  '<div class="h2">Candidates per stage (click a stage to see its candidates)</div><div class="kgrid" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr));margin-bottom:12px">'+counts+'</div>'+
+  '<div class="h2">Date of joining</div><div class="card" style="padding:6px 14px"><div class="h3r muted"><div>Joining date</div><div>Stage</div><div>Candidate</div></div>'+jl+'</div>'+
+  '<div class="h2">Job description</div><div class="card" style="white-space:pre-wrap;line-height:1.6">'+esc(r.desc)+'</div>'+
+  '<div class="h2">Timeline</div><div class="card" style="padding:6px 14px">'+log+'</div>';
+}
+function openStatus(){ST={to:reqById(focusReq).status==="Closed"?"Open":"",date:TODAY,reason:"",err:"",mode:"hold"};stOpen=true;render();}
+function cancelStatus(){stOpen=false;render();}
+function confirmStatus(){
+  const r=reqById(focusReq);const last=lastAct(r).d;
+  ST.err="";
+  const onHoldClose=r.status==="On hold"&&ST.to==="Closed";
+  if(onHoldClose&&ST.mode==="hold")ST.date=last;
+  if(r.status==="Closed"&&hires(r)>0){ST.err="This requisition has a hired or joined candidate and cannot be reopened.";render();return;}
+  if(!ST.to)ST.err="Choose the new status.";
+  else if(!ST.date)ST.err="Choose the date.";
+  else if(ST.date<last)ST.err="The date cannot be before the last status activity ("+last+").";
+  else if(ST.date>TODAY)ST.err="The date cannot be in the future.";
+  else if(!ST.reason.trim())ST.err="Enter the reason.";
+  if(ST.err){render();return;}
+  send("req_status",{id:r.id,to:ST.to,date:ST.date,reason:ST.reason.trim(),mode:ST.mode},a=>{
+    if(a.ok){stOpen=false;msg={t:"ok",s:a.msg};}else ST.err=a.msg;
+    render();
+  });
+}
+function statusModal(){
+  const r=reqById(focusReq);const last=lastAct(r).d;
+  const opts=r.status==="Open"?["On hold","Closed"]:(r.status==="Closed"?["Open"]:["Open","Closed"]);
+  const ohc=r.status==="On hold"&&ST.to==="Closed";
+  const modeBox=ohc?'<div class="lab">Closing date</div><label class="row" style="margin-bottom:6px"><input type="radio" name="cm" '+(ST.mode==="hold"?'checked':'')+' onchange="ST.mode=\'hold\';render()"> Use the hold date ('+last+') as the closing date</label><label class="row" style="margin-bottom:10px"><input type="radio" name="cm" '+(ST.mode==="custom"?'checked':'')+' onchange="ST.mode=\'custom\';render()"> Select a different closing date</label>':'';
+  const dateBox=ohc&&ST.mode==="hold"?'':'<label class="lab">Date of this activity</label><input type="date" class="inp" style="margin-bottom:10px" min="'+last+'" max="'+TODAY+'" value="'+ST.date+'" onchange="ST.date=this.value">';
+  const lbl={"Open":"Reopen","On hold":"Put on hold","Closed":"Close"};
+  const warn=ST.to==="On hold"?'<div class="msg warn"><strong>Warning.</strong> The next time this requisition is opened, time to fill is reset to zero and counted from the new open date. Are you sure you want to put this requisition on hold?</div>':(ST.to==="Open"?'<div class="msg warn">'+(r.status==="Closed"?'This closed requisition can be reopened because no candidate was hired or joined. ':'')+'Time to fill restarts from zero on the date you choose below.</div>':(ST.to==="Closed"?'<div class="msg warn">Time to fill is counted from '+r.clock+' to the closing date. A closed requisition can be reopened only if no candidate was hired or joined.</div>':''));
+  return '<div class="modal"><div class="mbox"><div class="ttl">Requisition status</div><div class="muted" style="margin-bottom:12px">'+r.id+' is currently '+pill(r.status)+' since '+last+'.</div>'+(ST.err?'<div class="msg err">'+esc(ST.err)+'</div>':'')+
+  '<label class="lab">New status</label><select class="inp" style="margin-bottom:10px" onchange="ST.to=this.value;ST.err=\'\';render()"><option value="">Select status</option>'+opts.map(o=>'<option value="'+o+'" '+(ST.to===o?'selected':'')+'>'+lbl[o]+'</option>').join('')+'</select>'+warn+
+  modeBox+dateBox+
+  '<label class="lab">Reason (required)</label><textarea class="inp" rows="3" style="margin-bottom:12px" oninput="ST.reason=this.value">'+esc(ST.reason)+'</textarea>'+
+  '<div class="row" style="justify-content:flex-end"><button class="btn" onclick="cancelStatus()">Cancel</button><button class="'+(ST.to==="Open"?'btnp':'btnd')+'" onclick="confirmStatus()">'+(ST.to?(ST.to==="On hold"?"Yes, put on hold":(ST.to==="Open"?"Reopen requisition":"Close requisition")):"Save status")+'</button></div></div></div>';
+}
+function vRNew(){
+  let c="";
+  if(reqStep===0)c=fg([["bp","BP number"],["req","Requisition number"],["title","Job designation"],["jobCat","Job category","select",JOBCATS],["level","Job level"],["positions","Number of positions","number"],["location","Location"],["dept","Department"],["hm","Hiring manager name"],["recruiter","Recruiter name"],["recEmail","Recruiter email ID","email"]],D,"setD")+'<div class="muted" style="margin-top:8px">Recruiter name and email can be changed later from Edit requisition.</div>';
+  if(reqStep===1)c='<div style="margin-bottom:12px"><label class="lab">Job description</label><textarea class="inp" rows="5" onchange="setD(\'desc\',this.value)">'+esc(D.desc)+'</textarea></div><label class="lab">Pay range</label>'+fg([["pmin","Minimum pay"],["pmid","Midpoint pay"],["pmax","Maximum pay"]],D,"setD");
+  if(reqStep===2)c=fg([["reason","Reason for opening"],["open","Open date","date"]],D,"setD")+'<div class="muted" style="margin-top:8px">A new requisition starts with the status Open. Open date defaults to today. A past or future date can be chosen.</div>';
+  if(reqStep===3)c='<label class="lab">Number of interviews</label><input class="inp" style="width:90px" type="number" min="0" max="10" value="'+D.ivs.length+'" onchange="setCnt(this.value)"><div class="grid" style="margin-top:12px">'+ivEditor(D.ivs,"setIv")+'</div><div class="muted" style="margin-top:10px">Every requisition also gets Offer, Hire, Joined, and BGV after the interviews.</div>';
+  if(reqStep===4){
+    const ivs=D.ivs.filter(i=>IVMAP[i.type]).map((i,k)=>(k+1)+'. '+esc(i.type)+(i.who?' with '+esc(i.who):'')).join('<br>');
+    c='<div class="sec">Review</div><div class="card" style="padding:8px 14px">'+rv("BP number",esc(D.bp))+rv("Requisition number",esc(D.req))+rv("Job designation",esc(D.title))+rv("Job category",esc(D.jobCat))+rv("Job level",esc(D.level))+rv("Number of positions",esc(D.positions))+rv("Location",esc(D.location))+rv("Department",esc(D.dept))+rv("Hiring manager",esc(D.hm))+rv("Recruiter name",esc(D.recruiter))+rv("Recruiter email ID",esc(D.recEmail))+rv("Pay range",esc([D.pmin,D.pmid,D.pmax].filter(Boolean).join(' / ')))+rv("Reason for opening",esc(D.reason))+rv("Open date",esc(D.open))+rv("Status","Open")+rv("Interviews",ivs||"None")+'</div><div class="sec">Job description</div><div class="card" style="white-space:pre-wrap;max-height:160px;overflow-y:auto;line-height:1.6">'+(D.desc?esc(D.desc):'<span class="muted">Not entered</span>')+'</div>';
+  }
+  const nb='<button class="btn" '+(reqStep===0?'style="visibility:hidden"':'')+' onclick="prevReq()">Previous</button><button class="btnp" onclick="nextReq()">'+(reqStep===4?'Create requisition':'Next')+'</button>';
+  return split(RSTEPS,reqStep,"Create requisition",'<div class="h2" style="margin-top:0">'+RSTEPS[reqStep]+'</div>'+c,nb);
+}
+function prevReq(){if(reqStep>0){reqStep--;msg=null;render();}}
+function nextReq(){
+  if(reqStep===0){
+    if(!D.bp||!D.req||!D.title){msg={t:"err",s:"BP number, requisition number, and job designation are required."};render();return;}
+    if(!D.jobCat){msg={t:"err",s:"Choose the job category (Full time or Contract)."};render();return;}
+    if(R.some(r=>r.id.toLowerCase()===D.req.trim().toLowerCase())){msg={t:"err",s:"Requisition number "+D.req+" already exists."};render();return;}
+    if(D.recEmail&&!/^\S+@\S+\.\S+$/.test(D.recEmail)){msg={t:"err",s:"Enter a valid recruiter email ID."};render();return;}
+  }
+  if(reqStep===3){
+    const used=D.ivs.filter(i=>IVMAP[i.type]).map(i=>i.type);
+    const twice=used.find((x,i)=>used.indexOf(x)!==i);
+    if(twice){msg={t:"err",s:"Each interview type can be used only once in the workflow. "+twice+" is selected twice."};render();return;}
+  }
+  if(reqStep<4){reqStep++;msg=null;render();return;}
+  send("create_req",{D:D},a=>{
+    if(a.ok){reqStep=0;tab="reqs";regFilter="All";resetReqDraft();msg={t:"ok",s:a.msg};}
+    else msg={t:"err",s:a.msg};
+    render();
+  });
+}
+function goAdd(){CD=newCD();cStep=0;tab="cadd";msg=null;render();}
+function setSource(v){CD.source=v;CD.srcDetail="";render();}
+function toggleReq(id,on){if(on){if(!CD.reqs.includes(id))CD.reqs.push(id);}else CD.reqs=CD.reqs.filter(x=>x!==id);render();}
+function vCAdd(){
+  let c="";
+  if(cStep===0){
+    c=catFields(CD,"CD")+'<div style="margin-bottom:12px"><label class="lab">Resume</label><input type="file" accept=".pdf,.doc,.docx" onchange="pickResume(this,\'CD\')"><div class="muted" style="margin-top:4px">'+(CD.resume?'Selected: '+esc(CD.resume):'PDF or Word file, up to 5 MB.')+'</div></div>'+fg([["first","First name"],["middle","Middle name"],["last","Last name"],["email","Email","email"],["phone","Phone"],["location","Candidate location"]],CD,"setCD");
+  }
+  if(cStep===1){
+    const follow=SRC_FOLLOW[CD.source];
+    c='<label class="lab">Source</label><select class="inp" style="max-width:320px" onchange="setSource(this.value)"><option value="">Select source</option>'+SOURCES.map(o=>'<option value="'+o+'" '+(CD.source===o?'selected':'')+'>'+o+'</option>').join('')+'</select>'+(follow?'<div style="max-width:320px;margin-top:12px"><label class="lab">'+follow+'</label><input class="inp" value="'+esc(CD.srcDetail)+'" onchange="setCD(\'srcDetail\',this.value)"></div>':'');
+  }
+  if(cStep===2){
+    const open=R.filter(r=>r.status==="Open");
+    c=(open.length?'':'<div class="msg warn">There are no open requisitions. Create or reopen a requisition before adding a candidate.</div>')+'<div class="muted" style="margin-bottom:10px">Only open requisitions are shown. Requisitions on hold or closed cannot take new candidates. Select one or more.</div>'+open.map(r=>'<label class="row card" style="margin-bottom:8px"><input type="checkbox" '+(CD.reqs.includes(r.id)?'checked':'')+' onchange="toggleReq(\''+r.id+'\',this.checked)"><span><strong style="font-weight:500">'+r.id+'</strong> - '+esc(r.title)+' ('+esc(r.location)+', '+esc(r.jobCat)+')</span></label>').join('')+'<div class="lab" style="margin-top:8px">Job location (from selected requisitions)</div><div class="card" style="background:#F1EFE8;margin:0">'+(CD.reqs.length?CD.reqs.map(id=>{const r=reqById(id);return esc(r.id)+': '+esc(r.location);}).join('<br>'):'<span class="muted">Select a requisition to see its location</span>')+'</div>';
+  }
+  if(cStep===3){
+    c='<div class="sec">Review</div><div class="card" style="padding:8px 14px">'+rv("Category",esc(catText(CD)))+rv("Resume",esc(CD.resume))+rv("Name",esc([CD.first,CD.middle,CD.last].filter(Boolean).join(' ')))+rv("Email",esc(CD.email))+rv("Phone",esc(CD.phone))+rv("Candidate location",esc(CD.location))+rv("Source",esc(CD.source+(SRC_FOLLOW[CD.source]&&CD.srcDetail?' ('+CD.srcDetail+')':'')))+rv("Job applied for",CD.reqs.map(id=>{const r=reqById(id);return esc(r.id+' - '+r.title+' ('+r.location+')');}).join('<br>'))+'</div>';
+  }
+  const nb='<button class="btn" '+(cStep===0?'style="visibility:hidden"':'')+' onclick="prevCand()">Previous</button><button class="btnp" onclick="nextCand()">'+(cStep===3?'Save candidate':'Next')+'</button>';
+  return split(CSTEPS,cStep,"Add candidate",'<div class="h2" style="margin-top:0">'+CSTEPS[cStep]+'</div>'+c,nb);
+}
+function catCheck(o){
+  if(!o.category)return "Choose the candidate category.";
+  if(EMP_CATS.includes(o.category)&&!o.empStatus)return "Choose whether this person is currently employed or a past employee.";
+  return "";
+}
+function prevCand(){if(cStep>0){cStep--;msg=null;render();}}
+function nextCand(){
+  if(cStep===0){
+    const e=catCheck(CD);if(e){msg={t:"err",s:e};render();return;}
+    if(!CD.first||!CD.last||!CD.email||!CD.phone){msg={t:"err",s:"First name, last name, email, and phone are required."};render();return;}
+  }
+  if(cStep===1&&!CD.source){msg={t:"err",s:"Choose a source."};render();return;}
+  if(cStep===1&&SRC_FOLLOW[CD.source]&&!CD.srcDetail.trim()){msg={t:"err",s:"Enter the "+SRC_FOLLOW[CD.source].toLowerCase()+"."};render();return;}
+  if(cStep===2&&CD.reqs.length===0){msg={t:"err",s:"Select at least one open requisition."};render();return;}
+  if(cStep===3){saveOpen=true;render();return;}
+  cStep++;msg=null;render();
+}
+function cancelSave(){saveOpen=false;render();}
+function confirmSave(){
+  saveOpen=false;
+  const dup=C.find(c=>c.email.toLowerCase()===CD.email.trim().toLowerCase()&&c.phone.replace(/\s/g,"")===CD.phone.replace(/\s/g,""));
+  if(dup){msg={t:"err",s:"This candidate already exists: "+fullName(dup)+". Open the existing record instead."};render();return;}
+  send("add_candidate",{CD:CD},a=>{
+    if(a.ok){tab="cands";candTile="All";candSearch="";CD=newCD();cStep=0;msg={t:"ok",s:a.msg};}
+    else msg={t:"err",s:a.msg};
+    render();
+  });
+}
+function pickResume(inp,which){
+  const f=inp.files[0];const o=which==="CD"?CD:CE;
+  if(!f)return;
+  if(!/\.(pdf|doc|docx)$/i.test(f.name)){inp.value="";msg={t:"err",s:"The resume must be a PDF or Word file (.pdf, .doc, .docx)."};render();return;}
+  if(f.size>5*1024*1024){inp.value="";msg={t:"err",s:"The resume file is larger than 5 MB."};render();return;}
+  const fr=new FileReader();
+  fr.onload=()=>{o.resume=f.name;o.resumeFile={name:f.name,mime:f.type||"application/octet-stream",b64:String(fr.result).split(",")[1]||""};msg=null;render();};
+  fr.onerror=()=>{msg={t:"err",s:"The resume file could not be read. Choose the file again."};render();};
+  fr.readAsDataURL(f);
+}
+function openResume(cid){
+  send("get_resume",{cand:cid},a=>{
+    if(a.ok&&a.file){saveFile(a.file);msg={t:"ok",s:"Resume downloaded: "+a.file.name+". Open it from your browser's downloads."};}
+    else msg={t:"err",s:a.msg||"The resume could not be downloaded."};
+    render();
+  });
+}
+function saveFile(f){
+  const bin=atob(f.b64);const u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+  const url=URL.createObjectURL(new Blob([u],{type:f.mime}));
+  const a=document.createElement("a");a.href=url;a.download=f.name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+function listView(base,title,backHtml){
+  LIST_BASE=base;
+  const cnt=s=>s==="All"?base.length:(s==="Interview"?base.filter(x=>INTERVIEW_TILE.includes(tagLabel(x.t))).length:base.filter(x=>tagLabel(x.t)===s).length);
+  const tiles=["All","New Application","Screening","Interview","Offer","Hire","Joined","BGV","Declined"];
+  return '<div class="row" style="justify-content:space-between;margin-bottom:12px">'+(backHtml||'<div class="h1" style="margin:0">'+title+'</div>')+'<div class="row"><input class="inp" style="width:280px;max-width:100%" placeholder="Search by name, email, or phone" value="'+esc(candSearch)+'" oninput="candSearch=this.value;renderList()"><button class="btnx" onclick="xl()">Download Excel</button>'+(title==="Candidates"?'<button class="btnp" onclick="goAdd()">Add candidate</button>':'')+'</div></div>'+
+  '<div class="tiles" style="margin-bottom:12px">'+tiles.map(s=>'<div class="tile '+(candTile===s?'on':'')+'" onclick="candTile=\''+s+'\';render()"><div class="muted">'+(s==="All"?"All applications":s)+'</div><div class="tn">'+cnt(s)+'</div></div>').join('')+'</div>'+
+  '<div class="muted" id="ccount" style="margin-bottom:8px"></div><div class="scroll"><div class="g5h"><div>Candidate</div><div>Category</div><div>Req</div><div>Requisition</div><div>Added</div><div>Joining date</div><div>Stage</div></div><div id="clist"></div></div>';
+}
+function vCands(){return listView(allTags(),"Candidates",null);}
+function vDrill(){
+  if(!drill)return '<div class="muted">Nothing selected.</div>';
+  const back='<span class="link" onclick="go(\''+(drill.backTab==="dash"?"dash":"rdet")+'\')">Back to '+(drill.backTab==="dash"?"dashboard":"requisition")+'</span>';
+  return listView(drillTags(),drill.title,'<div class="row"><span>'+back+'</span><div class="h1" style="margin:0 0 0 12px">'+esc(drill.title)+'</div></div>');
+}
+function renderList(){
+  const el=document.getElementById("clist");if(!el)return;
+  const q=candSearch.trim().toLowerCase();
+  const rows=LIST_BASE.filter(({c,t})=>{
+    const st=tagLabel(t);
+    const tileOk=candTile==="All"||(candTile==="Interview"?INTERVIEW_TILE.includes(st):st===candTile);
+    const qOk=!q||fullName(c).toLowerCase().includes(q)||c.email.toLowerCase().includes(q)||c.phone.replace(/\s/g,"").includes(q.replace(/\s/g,""));
+    return tileOk&&qOk;
+  });
+  const cc=document.getElementById("ccount");if(cc)cc.textContent="Showing "+rows.length+" of "+LIST_BASE.length+" applications";
+  el.innerHTML=rows.map(({c,t})=>{const r=reqById(t.req);return '<div class="g5r" onclick="openProf(\''+c.id+'\')"><div style="color:#0A97A6;font-weight:500">'+esc(fullName(c))+'</div><div>'+esc(catText(c))+'</div><div>'+r.id+'</div><div>'+esc(r.title)+'</div><div>'+c.added+'</div><div>'+(t.doj||'-')+'</div><div>'+pill(tagLabel(t))+'</div></div>';}).join('')||'<div class="muted" style="padding:12px 6px">No candidates match this search.</div>';
+}
+function openProf(id){profFrom=(tab==="cprof"?profFrom:tab);focusCand=id;candEdit=false;tab="cprof";msg=null;render();}
+function startEditCand(){
+  const c=C.find(x=>x.id===focusCand);
+  CE={first:c.first,middle:c.middle,last:c.last,email:c.email,phone:c.phone,location:c.location,category:c.category,empStatus:c.empStatus,source:c.source,srcDetail:c.srcDetail,resume:c.resume,resumeFile:null,reqs:c.tags.map(t=>t.req)};
+  candEdit=true;msg=null;render();
+}
+function cancelEditCand(){candEdit=false;render();}
+function toggleCEReq(id,on){if(on){if(!CE.reqs.includes(id))CE.reqs.push(id);}else CE.reqs=CE.reqs.filter(x=>x!==id);render();}
+function saveCandEdit(){
+  const c=C.find(x=>x.id===focusCand);
+  const e=catCheck(CE);if(e){msg={t:"err",s:e};render();return;}
+  if(!CE.first||!CE.last||!CE.email||!CE.phone){msg={t:"err",s:"First name, last name, email, and phone are required."};render();return;}
+  if(SRC_FOLLOW[CE.source]&&!String(CE.srcDetail||"").trim()){msg={t:"err",s:"Enter the "+SRC_FOLLOW[CE.source].toLowerCase()+"."};render();return;}
+  if(!CE.reqs.length){msg={t:"err",s:"Keep at least one requisition tagged."};render();return;}
+  const dup=C.find(x=>x.id!==c.id&&x.email.toLowerCase()===CE.email.trim().toLowerCase()&&x.phone.replace(/\s/g,"")===CE.phone.replace(/\s/g,""));
+  if(dup){msg={t:"err",s:"Another candidate already has this email and phone: "+fullName(dup)+"."};render();return;}
+  send("edit_candidate",{id:c.id,CE:CE},a=>{msg={t:a.ok?"ok":"err",s:a.msg};if(a.ok)candEdit=false;render();});
+}
+function vCandEdit(c){
+  const reqs=R.filter(r=>r.status==="Open"||CE.reqs.includes(r.id));
+  return '<div class="row" style="justify-content:space-between;margin-bottom:10px"><div class="h1" style="margin:0">Edit '+esc(fullName(c))+'</div><div class="row"><button class="btn" onclick="cancelEditCand()">Cancel</button><button class="btnp" onclick="saveCandEdit()">Save changes</button></div></div>'+
+  '<div class="card">'+catFields(CE,"CE")+fg([["first","First name"],["middle","Middle name"],["last","Last name"],["email","Email","email"],["phone","Phone"],["location","Candidate location"]],CE,"setCE")+'<div style="margin-top:12px"><label class="lab">Source</label><select class="inp" style="max-width:320px" onchange="CE.source=this.value;CE.srcDetail=\'\';render()">'+SOURCES.map(o=>'<option value="'+o+'" '+(CE.source===o?'selected':'')+'>'+o+'</option>').join('')+'</select>'+(SRC_FOLLOW[CE.source]?'<div style="max-width:320px;margin-top:10px"><label class="lab">'+SRC_FOLLOW[CE.source]+'</label><input class="inp" value="'+esc(CE.srcDetail)+'" onchange="setCE(\'srcDetail\',this.value)"></div>':'')+'</div><div style="margin-top:12px"><label class="lab">Resume</label><div class="muted" style="margin-bottom:4px">'+(CE.resumeFile?'New file selected: '+esc(CE.resumeFile.name):(c.resume?'Current file: '+esc(c.resume):'No resume uploaded yet'))+'</div><input type="file" accept=".pdf,.doc,.docx" onchange="pickResume(this,\'CE\')"><div class="muted" style="margin-top:4px">Choose a file only to add or replace the resume. PDF or Word, up to 5 MB.</div></div></div>'+
+  '<div class="h2">Requisitions tagged</div><div class="muted" style="margin-bottom:8px">Open requisitions and any requisition this candidate is already tagged to. Untick to remove a tag.</div>'+reqs.map(r=>'<label class="row card" style="margin-bottom:8px"><input type="checkbox" '+(CE.reqs.includes(r.id)?'checked':'')+' onchange="toggleCEReq(\''+r.id+'\',this.checked)"><span><strong style="font-weight:500">'+r.id+'</strong> - '+esc(r.title)+' ('+esc(r.location)+')'+(r.status!=="Open"?' <span class="muted">('+r.status.toLowerCase()+')</span>':'')+'</span></label>').join('');
+}
+function needsDoj(l){return l==="Joined"||l==="BGV";}
+function vProf(){
+  const c=C.find(x=>x.id===focusCand);
+  if(!c)return '<div class="muted">Select a candidate from the list.</div>';
+  if(candEdit)return vCandEdit(c);
+  const apps=c.tags.map(t=>{
+    const r=reqById(t.req);const key=c.id+"|"+t.req;const cur=tagLabel(t);const sel=pend[key]||order(r)[t.idx];
+    const dojVal=pdoj[key]!==undefined?pdoj[key]:(t.doj||"");
+    const dojBox=needsDoj(sel)?'<div style="min-width:170px"><label class="lab">Date of joining (required)</label><input type="date" class="inp" value="'+dojVal+'" onchange="pdoj[\''+key+'\']=this.value"></div>':'';
+    const declineBox=decl===key?'<div style="margin-top:10px"><label class="lab">Reason for decline</label><textarea id="dr" class="inp" rows="2"></textarea><div class="row" style="justify-content:flex-end;margin-top:8px"><button class="btn" onclick="cancelDecline()">Cancel</button><button class="btnd" onclick="confirmDecline(\''+c.id+'\',\''+t.req+'\')">Confirm decline</button></div></div>':'';
+    return '<div class="card"><div class="row" style="justify-content:space-between"><div><div style="font-weight:500">'+r.id+' - '+esc(r.title)+'</div><div class="muted">Application added '+c.added+(t.doj?' | Date of joining '+t.doj:'')+'</div></div>'+pill(cur)+'</div>'+
+    (t.declined?'<div class="msg err" style="margin:10px 0 0">Declined. Reason: '+esc(t.reason)+'</div>':'')+
+    '<div class="row" style="margin-top:10px;align-items:flex-end"><div style="flex:1;min-width:180px"><label class="lab">Stage</label><select class="inp" onchange="pend[\''+key+'\']=this.value;render()">'+order(r).map(o=>'<option value="'+o+'" '+(o===sel?'selected':'')+'>'+o+'</option>').join('')+'</select></div>'+dojBox+'<button class="btnp" onclick="submitStage(\''+c.id+'\',\''+t.req+'\')">Submit stage</button><button class="btnd" onclick="startDecline(\''+key+'\')">Decline</button></div>'+(needsDoj(sel)?'<div class="muted" style="margin-top:6px">Pick the joining date from the calendar. Past and future dates are both allowed, for example a January 2027 joining entered in December 2026.</div>':'')+declineBox+'</div>';
+  }).join('');
+  const back='<span class="link" onclick="go(\''+profFrom+'\')">Back</span>';
+  return '<div class="row" style="justify-content:space-between;margin-bottom:10px">'+back+'<button class="btnx" onclick="startEditCand()">Edit candidate</button></div><div class="row" style="margin-bottom:12px"><div class="h1" style="margin:0">'+esc(fullName(c))+'</div>'+(isInternal(c)?'<span class="pill" style="background:#EEEDFE;color:#3C3489">Internal</span>':'')+'</div>'+
+  '<div class="card"><div class="grid">'+[["Category",c.category],["Employment status",EMP_CATS.includes(c.category)?c.empStatus:"Not applicable"],["Email",c.email],["Phone",c.phone],["Location",c.location],["Source",c.source+(c.srcDetail?' ('+c.srcDetail+')':'')],["Added",c.added]].map(p=>'<div><div class="muted">'+p[0]+'</div><div style="font-weight:500;overflow-wrap:anywhere">'+esc(p[1])+'</div></div>').join('')+'</div><div class="row" style="margin-top:12px;justify-content:space-between"><div><div class="muted">Resume</div><div style="font-weight:500;overflow-wrap:anywhere">'+(c.resume?esc(c.resume):'<span class="muted">No resume uploaded</span>')+'</div></div>'+(c.hasResume?'<button class="btnx" onclick="openResume(\''+c.id+'\')">Download resume</button>':'')+'</div></div>'+
+  '<div class="h2">Applications and stage</div>'+apps;
+}
+function submitStage(cid,rid){
+  const c=C.find(x=>x.id===cid);const t=c.tags.find(x=>x.req===rid);const key=cid+"|"+rid;const r=reqById(rid);
+  const label=pend[key]||order(r)[t.idx];
+  let doj="";
+  if(needsDoj(label)){
+    doj=pdoj[key]!==undefined?pdoj[key]:t.doj;
+    if(!doj){msg={t:"err",s:"Enter the date of joining before submitting the "+label+" stage."};render();return;}
+  }
+  send("set_stage",{cand:cid,req:rid,label:label,doj:doj},a=>{
+    if(a.ok){delete pend[key];delete pdoj[key];}
+    msg={t:a.ok?"ok":"err",s:a.msg};render();
+  });
+}
+function startDecline(key){decl=key;render();}
+function cancelDecline(){decl=null;render();}
+function confirmDecline(cid,rid){
+  const reason=document.getElementById("dr").value.trim();
+  if(!reason){msg={t:"err",s:"Enter the reason for the decline."};render();return;}
+  send("decline",{cand:cid,req:rid,reason:reason},a=>{
+    if(a.ok)decl=null;
+    msg={t:a.ok?"ok":"err",s:a.msg};render();
+  });
+}
+/* ---------- Excel export: built on the server from the live database ---------- */
+function xl(){
+  send("export",{},a=>{
+    if(a.ok&&a.file)saveFile(a.file);
+    msg={t:a.ok?"ok":"err",s:a.msg||"The Excel file could not be created."};render();
+  });
+}
+
+let lastView="";
+function render(){
+  setToday();
+  document.querySelectorAll(".modal").forEach(m=>m.remove());
+  document.getElementById("nav").innerHTML=nav();
+  let body="";
+  if(tab==="dash")body=vDash();
+  else if(tab==="reqs")body=vReqs();
+  else if(tab==="rdet")body=vRDet();
+  else if(tab==="rnew")body=vRNew();
+  else if(tab==="cands")body=vCands();
+  else if(tab==="drill")body=vDrill();
+  else if(tab==="cadd")body=vCAdd();
+  else if(tab==="cprof")body=vProf();
+  const m=msg?'<div class="msg '+(msg.t==="ok"?"ok":"err")+'">'+esc(msg.s)+'</div>':"";
+  document.getElementById("main").innerHTML=m+body;
+  if(tab==="cands"||tab==="drill")renderList();
+  if(stOpen&&tab==="rdet")document.getElementById("wrap").insertAdjacentHTML("beforeend",statusModal());
+  if(saveOpen&&tab==="cadd")document.getElementById("wrap").insertAdjacentHTML("beforeend",'<div class="modal"><div class="mbox"><div class="ttl">Save this candidate?</div><div class="muted" style="margin-bottom:14px">The candidate will be saved and tagged to the selected requisitions.</div><div class="row" style="justify-content:flex-end"><button class="btn" onclick="cancelSave()">Cancel</button><button class="btnp" onclick="confirmSave()">Yes, save</button></div></div></div>');
+  fixBtns();
+  const view=tab+"|"+(tab==="rdet"?focusReq:"")+(tab==="cprof"?focusCand:"")+(tab==="drill"&&drill?drill.title:"");
+  if(view!==lastView){lastView=view;document.getElementById("scroller").scrollTop=0;}
+  document.getElementById("wrap").classList.toggle("busy",busy);
+  document.getElementById("chip").classList.toggle("on",busy);
+}
+
+/* ---------- link to the Streamlit server ---------- */
+let busy=false,pollWait=false,loaded=false,dataVer=null,cbs={},nseq=0,busyTimer=null;
+const SID=Math.random().toString(36).slice(2,10);
+function post(type,extra){window.parent.postMessage(Object.assign({isStreamlitMessage:true,type:type},extra||{}),"*");}
+function send(type,payload,cb){
+  if(busy)return;
+  setToday();busy=true;
+  const nonce=SID+"-"+(++nseq);cbs[nonce]=cb;
+  document.getElementById("wrap").classList.add("busy");document.getElementById("chip").classList.add("on");
+  busyTimer=setTimeout(()=>{
+    if(!cbs[nonce])return;
+    delete cbs[nonce];busy=false;stOpen=false;
+    msg={t:"err",s:"The server did not answer. Check your connection, refresh the page, and confirm whether the change was saved before trying again."};render();
+  },60000);
+  post("streamlit:setComponentValue",{value:{type:type,payload:payload,nonce:nonce,today:TODAY},dataType:"json"});
+}
+function poll(){
+  if(busy||pollWait||!loaded||document.hidden)return;
+  pollWait=true;setTimeout(()=>{pollWait=false;},12000);
+  setToday();
+  post("streamlit:setComponentValue",{value:{type:"poll",nonce:SID+"-p"+(++nseq),today:TODAY},dataType:"json"});
+}
+function editing(){
+  const a=document.activeElement;
+  return tab==="rnew"||tab==="cadd"||reqEdit||candEdit||stOpen||saveOpen||decl!==null||!!(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName));
+}
+window.addEventListener("message",ev=>{
+  const d=ev.data;if(!d||d.type!=="streamlit:render")return;
+  const a=d.args||{};pollWait=false;
+  const changed=a.ver!==dataVer;
+  if(a.data&&changed){R=a.data.R;C=a.data.C;dataVer=a.ver;}
+  const first=!loaded;loaded=true;
+  if(first)resetReqDraft();
+  if(a.ack&&cbs[a.ack.nonce]){
+    const cb=cbs[a.ack.nonce];delete cbs[a.ack.nonce];busy=false;clearTimeout(busyTimer);cb(a.ack);return;
+  }
+  if(first||(changed&&!editing()))render();
+});
+setInterval(poll,15000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)poll();});
+post("streamlit:componentReady",{apiVersion:1});
+post("streamlit:setFrameHeight",{height:900});
+</script>
+</body>
+</html>
