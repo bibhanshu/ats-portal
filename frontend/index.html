@@ -5,8 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Talent Acquisition Portal</title>
 <style>
-body{margin:0;padding:14px;background:#F4F6F8;font-family:Arial,Helvetica,sans-serif}
-.wrap{position:relative;border:0.5px solid #D3D1C7;border-radius:12px;overflow:hidden;background:#fff;color:#1a1a1a;font-size:13px;max-width:1240px;margin:0 auto}
+html,body{height:100%;margin:0;padding:0;overflow:hidden}
+body{background:#fff;font-family:Arial,Helvetica,sans-serif}
+#scroller{height:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.wrap{position:relative;background:#fff;color:#1a1a1a;font-size:13px;min-height:100%}
 .top{background:#0B1F4B;padding:8px 18px;display:flex;align-items:center;gap:24px;color:#fff;flex-wrap:wrap}
 .logo{background:#fff;border-radius:8px;padding:3px 8px;display:flex;align-items:center}
 .logo img{height:40px;display:block}
@@ -76,16 +78,18 @@ body{margin:0;padding:14px;background:#F4F6F8;font-family:Arial,Helvetica,sans-s
 .wrap.busy .main{opacity:.55}
 #chip{display:none;position:fixed;top:10px;right:14px;z-index:9;background:#FFD200;color:#1a1a1a;border-radius:12px;padding:5px 12px;font-size:12px;font-weight:500;font-family:Arial,Helvetica,sans-serif}
 #chip.on{display:block}
-@media(max-width:640px){body{padding:8px}.split{flex-direction:column}.rail{width:auto}}
+@media(max-width:640px){.split{flex-direction:column}.rail{width:auto}}
 </style>
 </head>
 <body>
+<div id="scroller">
 <div class="wrap" id="wrap">
   <div class="top">
     <div class="logo"><img src="logo.png" alt="Shell Recharge"></div>
     <div class="nav" id="nav"></div>
   </div>
   <div class="main" id="main"><div class="muted" style="padding:30px 0">Loading the portal...</div></div>
+</div>
 </div>
 <div id="chip">Working...</div>
 <script>
@@ -550,6 +554,7 @@ function xl(){
   });
 }
 
+let lastView="";
 function render(){
   setToday();
   document.querySelectorAll(".modal").forEach(m=>m.remove());
@@ -569,6 +574,8 @@ function render(){
   if(stOpen&&tab==="rdet")document.getElementById("wrap").insertAdjacentHTML("beforeend",statusModal());
   if(saveOpen&&tab==="cadd")document.getElementById("wrap").insertAdjacentHTML("beforeend",'<div class="modal"><div class="mbox"><div class="ttl">Save this candidate?</div><div class="muted" style="margin-bottom:14px">The candidate will be saved and tagged to the selected requisitions.</div><div class="row" style="justify-content:flex-end"><button class="btn" onclick="cancelSave()">Cancel</button><button class="btnp" onclick="confirmSave()">Yes, save</button></div></div></div>');
   fixBtns();
+  const view=tab+"|"+(tab==="rdet"?focusReq:"")+(tab==="cprof"?focusCand:"")+(tab==="drill"&&drill?drill.title:"");
+  if(view!==lastView){lastView=view;document.getElementById("scroller").scrollTop=0;}
   document.getElementById("wrap").classList.toggle("busy",busy);
   document.getElementById("chip").classList.toggle("on",busy);
 }
