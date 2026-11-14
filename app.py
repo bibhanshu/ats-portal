@@ -31,7 +31,7 @@ header[data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecor
 [data-testid="stVerticalBlock"] {gap: 0 !important;}
 [data-testid="stElementContainer"]:has(style) {display: none !important;}
 [data-testid="stMain"], section.main {overflow: hidden !important;}
-iframe {height: 100vh !important; width: 100% !important; border: 0; display: block;}
+iframe {height: 100vh !important; height: 100dvh !important; width: 100% !important; border: 0; display: block;}
 </style>
 """, unsafe_allow_html=True)
 
