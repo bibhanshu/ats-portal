@@ -1,0 +1,6 @@
+# Never upload these: they hold the database password or local data.
+.streamlit/secrets.toml
+ats_local.db
+__pycache__/
+*.pyc
+.venv/
